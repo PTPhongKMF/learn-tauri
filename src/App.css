@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'LavishlyYoursImp';
+  src: url('font/LavishlyYours-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-url: "Lavishly Yours"; 
+  --font-imp: "LavishlyYoursImp"; 
+}
