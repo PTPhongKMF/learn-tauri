@@ -13,3 +13,12 @@
   --font-url: "Lavishly Yours"; 
   --font-imp: "LavishlyYoursImp"; 
 }
+
+.img-banner {
+  display: block;
+  width: 100%;
+  height: 5rem;
+  max-width: 100vw;
+  object-fit: cover;
+  overflow-x: hidden;
+}
