@@ -3,10 +3,12 @@ import "./App.css";
 import { getResourcePath, loadJpgImage, loadTextFile } from "./services/fs";
 import { A } from "@solidjs/router";
 import { getTauriVersion, getVersion } from "@tauri-apps/api/app";
+import { invoke } from "@tauri-apps/api/core";
 
 function App() {
   const [tauriVer, setTauriVer] = createSignal("");
   const [appVer, setAppVer] = createSignal("");
+  const [appDir, setAppDir] = createSignal("");
 
   const [textFile, setTextFile] = createSignal("");
   const [img, setImg] = createSignal("");
@@ -16,12 +18,14 @@ function App() {
     try {
       const tauriVer = await getTauriVersion();
       const appVer = await getVersion();
+      const appDir = await invoke("get_exe_dir");
       const text = await loadTextFile("data/text/text.txt");
       const base64Img = await loadJpgImage("data/img.jpg");
       const imgurl = await getResourcePath("data/img.jpg");
 
       setTauriVer(tauriVer);
       setAppVer(appVer);
+      setAppDir(appDir);
       setTextFile(text);
       setImg(base64Img);
       setImgurl(imgurl);
@@ -34,6 +38,7 @@ function App() {
     <main class="w-full flex items-center flex-col text-2xl">
       <h1 class="font-sans">Welcome to Tauri + Solid</h1>
       <p class="text-base font-mono">Tauri ver: {tauriVer()} - App ver: {appVer()}</p>
+      <p class="text-base font-mono">app location: {appDir()}</p>
     
 
       <h1 class="font-url">This is custom font from url</h1>

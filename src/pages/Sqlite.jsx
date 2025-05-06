@@ -10,11 +10,13 @@ const Sqlite = () => {
   })
 
   return (
-    <>
-    <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><A href="/">Back</A></button>
-      <h1 class="flex items-center text-2xl">Testing Sqlite plugin - Tauri</h1>
+    <div class="w-full">
+      <button class="mb-4 flex px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><A href="/">Back</A></button>
+      <div class="flex justify-center">
+        <h1 class="text-2xl">Testing Sqlite plugin - Tauri</h1>
+      </div>
 
-    </>
+    </div>
   );
 }
 
