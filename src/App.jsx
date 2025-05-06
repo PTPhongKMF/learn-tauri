@@ -18,24 +18,28 @@ function App() {
 
   const [error, setError] = createSignal("")
 
-  createEffect(async () => {
-    try {
-      const tauriVer = await getTauriVersion();
-      const appVer = await getVersion();
-      const appDir = await invoke("get_exe_dir");
-      const text = await loadTextFile("data/text/text.txt");
-      const base64Img = await loadJpgImage("data/img.jpg");
-      const imgurl = await getResourcePath("data/img.jpg");
+  createEffect(() => {
+    async function setup() {
+      try {
+        const tauriVer = await getTauriVersion();
+        const appVer = await getVersion();
+        const appDir = await invoke("get_exe_dir");
+        const text = await loadTextFile("data/text/text.txt");
+        const base64Img = await loadJpgImage("data/img.jpg");
+        const imgurl = await getResourcePath("data/img.jpg");
 
-      setTauriVer(tauriVer);
-      setAppVer(appVer);
-      setAppDir(appDir);
-      setTextFile(text);
-      setImg(base64Img);
-      setImgurl(imgurl);
-    } catch (err) {
-      setError(err.message);
+        setTauriVer(tauriVer);
+        setAppVer(appVer);
+        setAppDir(appDir);
+        setTextFile(text);
+        setImg(base64Img);
+        setImgurl(imgurl);
+      } catch (err) {
+        setError(err.message);
+      }
     }
+
+    setup();
   });
 
   return (

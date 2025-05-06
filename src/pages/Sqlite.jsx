@@ -1,28 +1,29 @@
 import { A } from "@solidjs/router";
-import { appConfigDir, BaseDirectory, resourceDir } from "@tauri-apps/api/path";
-import { writeTextFile } from "@tauri-apps/plugin-fs";
-import Database from "@tauri-apps/plugin-sql";
+import { appConfigDir } from "@tauri-apps/api/path";
 import { createEffect, createSignal } from "solid-js";
-import { invoke } from "@tauri-apps/api/core";
 
 const Sqlite = () => {
   const [info, setInfo] = createSignal("");
-  
+
 
   const [personList, setPersonList] = createSignal([]);
   const [name, setName] = createSignal("");
 
   const [error, setError] = createSignal("")
 
-  createEffect(async () => {
-    try {
-      // const db = await Database.load("sqlite:db1.0.db");
-      const info = await appConfigDir();
+  createEffect(() => {
+    async function setup() {
+      try {
+        // const db = await Database.load("sqlite:db1.0.db");
+        const info = await appConfigDir();
 
-      setInfo(info);
-    } catch (err) {
-      setError(err.message);
+        setInfo(info);
+      } catch (err) {
+        setError(err.message);
+      }
     }
+
+    setup();
   });
 
   return (

@@ -14,17 +14,21 @@ const Fs = () => {
 
   const [error, setError] = createSignal("");
 
-  createEffect(async () => {
-    try {
-      const rescDir = await resourceDir();
-      const appDir = await invoke("get_exe_dir");
+  createEffect(() => {
+    async function setup() {
+      try {
+        const rescDir = await resourceDir();
+        const appDir = await invoke("get_exe_dir");
 
-      setAppDir(appDir);
-      setRescDir(rescDir);
-    } catch (err) {
-      setError(err.message);
+        setAppDir(appDir);
+        setRescDir(rescDir);
+      } catch (err) {
+        setError(err.message);
+      }
     }
-  })
+
+    setup();
+  });
 
   async function handleCreateTextfileInResc() {
     try {
