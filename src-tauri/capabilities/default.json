@@ -13,6 +13,9 @@
     "fs:allow-resource-read-recursive",
     "fs:allow-resource-write-recursive",
     "fs:scope-resource-recursive",
-    "sql:default"
+    "core:window:allow-close",
+    "core:window:allow-destroy",
+    "sql:default",
+    "sql:allow-execute"
   ]
 }
