@@ -13,9 +13,15 @@
     "fs:allow-resource-read-recursive",
     "fs:allow-resource-write-recursive",
     "fs:scope-resource-recursive",
+    "core:window:allow-create",
     "core:window:allow-close",
     "core:window:allow-destroy",
     "sql:default",
-    "sql:allow-execute"
+    "sql:allow-execute",
+
+    "core:webview:allow-create-webview",
+    "core:webview:allow-webview-close",
+
+    "core:webview:allow-create-webview-window"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "demo-tauri",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "scripts": {
@@ -14,16 +14,16 @@
   "dependencies": {
     "@solidjs/router": "^0.15.3",
     "@tailwindcss/vite": "^4.1.5",
+    "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-fs": "~2.2.1",
+    "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-sql": "~2.2.0",
     "solid-js": "^1.9.3",
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2",
     "tailwindcss": "^4.1.5"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2",
     "vite": "^6.0.3",
-    "vite-plugin-solid": "^2.11.0",
-    "@tauri-apps/cli": "^2"
+    "vite-plugin-solid": "^2.11.0"
   }
 }

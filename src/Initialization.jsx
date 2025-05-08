@@ -1,5 +1,5 @@
 import { resolveResource } from "@tauri-apps/api/path";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import Database from "@tauri-apps/plugin-sql";
 import { createEffect, createSignal, onCleanup } from "solid-js";
 
@@ -20,10 +20,10 @@ const Initialization = (props) => {
     let unlisten;
 
     async function setup() {
-      unlisten = await getCurrentWindow().onCloseRequested(async (e) => {
+      unlisten = await getCurrentWebviewWindow().onCloseRequested(async (e) => {
         console.log("closing");
         await db().close();
-        await getCurrentWindow().destroy();
+        await getCurrentWebviewWindow().destroy();
       });
     };
 

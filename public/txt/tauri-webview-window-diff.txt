@@ -1,0 +1,8 @@
+Conclusion on differents of tauri core api "webview", "webviewWindow" and "window":
+
+- webview is the "view" that rendered from your frontend to the app.
+- window is the actual native app window of the OS.
+=> if you expand the app window, you will see a black space briefly at the edge before the app "view" catch up and fill in. The thing is, the actual content of the native app window is nothing, pure black space, the webview just render stuff and inject on-top inside the window, hence why when resziing the window, the webview has to render and catch up instead of natively resizing with the window itself.
+
+- webviewWindow is basically the api that combine both "webview" and "window" api, all method of it will effect both at the same time.
+=> most of the time, use "webviewWindow" api, only use "webview" or "window" if you specifically want to manipulate them.
