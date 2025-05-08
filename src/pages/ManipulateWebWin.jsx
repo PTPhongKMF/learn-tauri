@@ -42,91 +42,35 @@ const ManipulateWebWin = () => {
     });
     createdWindow.once('tauri://error', function (e) {
       console.log("Creating window failed");
-      console.log(e.message);
+      console.log(e);
     });
   }
 
-  // async function createWebview() {
-  //   console.log("Creating webview");
-
-  //   try {
-  //     const createdWindow2 = new Window('123');
-  //     createdWebview = new Webview(createdWindow2, 'my-label2', {
-  //       url: "/"
-  //     });
-  //     console.log(createdWebview);
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-
-  //   createdWebview.once('tauri://created', function () {
-  //     console.log("Creating webview success");
-  //   });
-  //   createdWebview.once('tauri://error', function (e) {
-  //     console.log("Creating webview failed");
-  //   });
-  // }
-
-  // function createWebview() {
-  //   const appWindow = new Window('uniqueLabel');
-  //   const webview = new Webview(appWindow, 'theUniqueLabel', {
-  //     url: 'https://github.com/tauri-apps/tauri'
-  //   });
-
-  //   webview.once('tauri://created', function () {
-  //     console.log("Creating webview success");
-  //   });
-  //   webview.once('tauri://error', function (e) {
-  //     console.log("Creating webview failed");
-  //   });
-
-  //   // const webview = new WebviewWindow('my-label', {
-  //   //   url: 'https://github.com/tauri-apps/tauri'
-  //   // });
-  //   // webview.once('tauri://created', function () {
-  //   //   console.log("Creating webview success");
-  //   // });
-  //   // webview.once('tauri://error', function (e) {
-  //   //   console.log("Creating webview failed");
-  //   // });
-  // }
-
   async function createWebview() {
-    try {
-      // First create a window and ensure it's fully initialized
-      const appWindow = new Window('uniqueLabel');
-      
-      // Wait for the window to be created before adding a webview to it
-      await new Promise(resolve => {
-        appWindow.once('tauri://created', () => {
-          console.log("Parent window created successfully");
-          resolve();
-        });
-        
-        appWindow.once('tauri://error', (e) => {
-          console.log("Parent window creation failed");
-          setError(e.message);
-        });
-      });
-      
-      // Now create the webview in the initialized window
-      const webview = new Webview(appWindow, 'theUniqueLabel', {
-        url: 'https://github.com/tauri-apps/tauri'
-      });
-      
-      webview.once('tauri://created', function () {
-        console.log("Creating webview success");
-      });
-      
-      webview.once('tauri://error', function (e) {
-        console.log("Creating webview failed");
-        console.log(e);
+    console.log("Creating webview");
 
-      });
-    } catch (err) {
-      console.error("Error creating webview:", err);
-      setError(err.message);
-    }
+    createdWebview = new Webview(createdWindow, 'my-label');
+    console.log(createdWebview);
+
+    createdWebview.once('tauri://created', function () {
+      console.log("Creating webview success");
+    });
+    createdWebview.once('tauri://error', function (e) {
+      console.log("Creating webview failed");
+      console.log(e);
+    });
+  }
+
+  async function createWebviewWindow() {
+    const webview = new WebviewWindow('my-label');
+    
+    webview.once('tauri://created', function () {
+      console.log("Creating webviewWindow success");
+    });
+    webview.once('tauri://error', function (e) {
+      console.log("Creating webviewWindow failed");
+      console.log(e);
+    });
   }
 
   return (
@@ -160,6 +104,14 @@ const ManipulateWebWin = () => {
             Create new webview
           </button>
         </div>
+
+        <div class="flex gap-8 mt-8">
+          <button class="mb-4 flex px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onClick={createWebviewWindow}>
+            Create new webviewWindow
+          </button>
+        </div>
+
         <pre class="whitespace-pre-wrap bg-gray-100 p-4 rounded mt-2">
           {text.loading ? "Loading..." : text()}
         </pre>
