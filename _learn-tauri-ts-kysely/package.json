@@ -8,25 +8,25 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "kc": "kysely-codegen"
   },
   "license": "MIT",
   "dependencies": {
     "@solidjs/router": "^0.15.3",
     "@tailwindcss/vite": "^4.1.5",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-sql": "~2.2.0",
     "kysely": "^0.28.2",
     "kysely-dialect-tauri": "^1.2.1",
     "solid-js": "^1.9.3",
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2",
     "tailwindcss": "^4.1.5"
   },
   "devDependencies": {
-    "kysely-codegen": "^0.18.3",
+    "@tauri-apps/cli": "^2",
     "typescript": "~5.6.2",
     "vite": "^6.0.3",
-    "vite-plugin-solid": "^2.11.0",
-    "@tauri-apps/cli": "^2"
+    "vite-plugin-solid": "^2.11.0"
   }
 }
