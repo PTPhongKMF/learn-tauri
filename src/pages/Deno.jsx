@@ -1,9 +1,9 @@
 import { createEffect, createSignal } from "solid-js";
-import * as text from "https://esm.sh/jsr/@std/text@1.0.13";
+import { toCamelCase, toKebabCase, toPascalCase, toSnakeCase } from "https://esm.sh/jsr/@std/text@1.0.13";
 import { appConfigDir } from "@tauri-apps/api/path";
 import { A } from "@solidjs/router";
 
-// { toCamelCase, toKebabCase, toPascalCase, toSnakeCase }
+
 const Deno = () => {
   const [info, setInfo] = createSignal("");
   const [input, setInput] = createSignal("");
