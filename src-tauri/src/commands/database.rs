@@ -1,17 +1,17 @@
 use std::fs;
 use tauri::AppHandle;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use tempfile::TempDir;
 
 // Define structures for bundled migrations
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize)]
 struct BundledMigration {
     version: i64,
     description: String,
     sql: String,
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize)]
 struct MigrationBundle {
     migrations: Vec<BundledMigration>,
 }
@@ -19,7 +19,7 @@ struct MigrationBundle {
 /// Applies migrations from a bundled CBOR file
 #[tauri::command]
 pub async fn apply_migrations(
-    app_handle: AppHandle, 
+    _app_handle: AppHandle,   // Prefix with _ to silence unused variables warning (if use in the future, remove prefix)
     db_path: String, 
     migration_bundle: Vec<u8> // Binary CBOR data
 ) -> Result<i64, String> {
@@ -47,10 +47,10 @@ pub async fn apply_migrations(
         .await
         .map_err(|e| format!("Failed to connect to database: {}", e))?;
     
-    // Create a migrator from the temporary directory
-    let migrator = sqlx::migrate::Migrator::from_path(temp_dir.path())
+    // Create a migrator from the temporary directory containing migration files
+    let migrator = sqlx::migrate::Migrator::new(temp_dir.path())
         .await
-        .map_err(|e| format!("Failed to load migrations: {}", e))?;
+        .map_err(|e| format!("Failed to create migrator: {}", e))?;
     
     // Apply migrations
     migrator.run(&db)

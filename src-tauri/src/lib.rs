@@ -2,10 +2,6 @@ mod commands {
     pub mod fs_paths;
     pub mod database;
 }
-mod db {
-    pub mod migrations;
-    pub mod database;
-}
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -21,7 +17,8 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             greet,
-            commands::fs_paths::get_exe_dir
+            commands::fs_paths::get_exe_dir,
+            commands::database::apply_migrations
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
