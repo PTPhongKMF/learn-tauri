@@ -8,7 +8,7 @@ export const [db, setDb] = createSignal(null);
 const Initialization = (props) => {
   createEffect(() => {
     async function setupDb() {
-      const loadedDb = await Database.load("sqlite:" + await resolveResource("db/db1.0.db"));
+      const loadedDb = await Database.load("sqlite:" + await resolveResource("db/sqlite.db"));
       console.log(loadedDb);
       setDb(loadedDb);
     };

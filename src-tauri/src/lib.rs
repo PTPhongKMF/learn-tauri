@@ -1,5 +1,10 @@
 mod commands {
     pub mod fs_paths;
+    pub mod database;
+}
+mod db {
+    pub mod migrations;
+    pub mod database;
 }
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/

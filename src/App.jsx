@@ -4,6 +4,7 @@ import { getResourcePath, loadJpgImage, loadTextFile } from "./services/fs";
 import { A } from "@solidjs/router";
 import { getTauriVersion, getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
+import { tempDir } from "@tauri-apps/api/path";
 
 
 
@@ -11,6 +12,7 @@ function App() {
   const [tauriVer, setTauriVer] = createSignal("");
   const [appDir, setAppDir] = createSignal("");
   const [appVer, setAppVer] = createSignal("");
+  const [info, setInfo] = createSignal("");
 
   const [textFile, setTextFile] = createSignal("");
   const [img, setImg] = createSignal("");
@@ -27,6 +29,9 @@ function App() {
         const text = await loadTextFile("data/text/text.txt");
         const base64Img = await loadJpgImage("data/img.jpg");
         const imgurl = await getResourcePath("data/img.jpg");
+
+        const info = await tempDir();
+        setInfo(info);
 
         setTauriVer(tauriVer);
         setAppVer(appVer);
@@ -47,6 +52,7 @@ function App() {
       <h1 class="font-sans">Welcome to Tauri + Solid</h1>
       <p class="text-base font-mono">Tauri ver: {tauriVer()} - App ver: {appVer()}</p>
       <p class="text-base font-mono">app location: {appDir()}</p>
+      <p class="text-base font-mono">infos: {info()}</p>
 
 
       <h1 class="font-url">This is custom font from url</h1>
@@ -74,6 +80,12 @@ function App() {
       <div class="flex mt-8 justify-between gap-2">
         <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           <A href="/deno">Test Deno JSR</A>
+        </button>
+        <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          <A href="/sqlitemigr">Test Sqlite migration with rust</A>
+        </button>
+        <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          <A href="/solidjs">Test SolidJS</A>
         </button>
       </div>
     </main>
