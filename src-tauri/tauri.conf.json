@@ -33,7 +33,7 @@
     ],
     "resources": {
       "../externals/": "data",
-      "../database": "db"
+      "../database/releases/": "db"
     }
   }
 }

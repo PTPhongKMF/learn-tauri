@@ -1,22 +1,57 @@
-import { createEffect, createSignal, For } from "solid-js";
+import { createEffect, createSignal, For, onMount } from "solid-js";
 import { db, setDb } from "../Initialization";
 import { A } from "@solidjs/router";
+import Database from "@tauri-apps/plugin-sql";
+import { resolveResource } from "@tauri-apps/api/path";
+import { invoke } from "@tauri-apps/api/core";
 
 const SqliteMigrRust = () => {
   const [dbOpr, setDbOpr] = createSignal([]);
 
 
-  createEffect(() => {
+  onMount(() => {
     async function setup() {
-      db().close();
-      setDb(null);
+      console.log(db());
+      db() ? console.log("db is true") : console.log("db is false")
+
+      if (db()) {
+        const closeResult = await db().close();
+        console.log(closeResult);
+
+        console.log("still ran");
+        setDb(null);
+      }
     }
 
     setup();
   })
 
-  async function dbInit() {
+  function logging(log) {
+    console.log(log);
+    setDbOpr([log.toString(), ...dbOpr()]);
+  }
 
+  async function dbInit() {
+    logging("Start connect to DB");
+    const loadedDb = await Database.load("sqlite:" + await resolveResource("db/sqlite.db"));
+    setDb(loadedDb);
+    logging(db());
+    logging("Done, connected to DB");
+
+    logging("===================================================");
+
+    logging("Apply WAL mode");
+    const resultWAL = await db().execute("PRAGMA journal_mode = WAL;");
+    logging(resultWAL);
+    logging("Finish applied WAL mode");
+
+    logging("Start apply migration from rust");
+    const resultInvoke = await invoke("apply_migrations", {
+      dbPath: await resolveResource("db/sqlite.db"),
+      cborFilePath: await resolveResource("db/migrations")
+    });
+    logging("result from invoke: " + resultInvoke);
+    logging("Done apply migration from rust");
   }
 
   return (
@@ -35,7 +70,7 @@ const SqliteMigrRust = () => {
       <h1 class="text-2xl mt-4">Operation status:</h1>
       <For each={dbOpr()}>
         {(item, index) => (
-          <p>#{index()}: {item}</p>
+          <p>#{dbOpr().length - index()}: {item}</p>
         )}
       </For>
     </main>

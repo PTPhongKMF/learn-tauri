@@ -16,6 +16,8 @@ const Sqlite = () => {
     const personList = await db().select("SELECT * from Person");
 
     setPersonList(personList);
+
+    return personList;
   };
 
   createEffect(() => {
@@ -48,6 +50,10 @@ const Sqlite = () => {
     fetchPerson();
   }
 
+  async function manualFetchPerson() {
+    console.log(fetchPerson());
+  }
+
   return (
     <div class="w-full">
       <button class="mb-4 flex px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><A href="/">Back</A></button>
@@ -56,6 +62,11 @@ const Sqlite = () => {
         <h1 class="text-2xl">Testing Sqlite plugin - Tauri</h1>
         <p class="mt-6 text-sm font-mono italic">{info()}</p>
       </div>
+
+      <button class="mb-4 flex px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        onClick={manualFetchPerson}>
+        Manual fetch person
+      </button>
 
       <div class="flex justify-around mt-8">
         <input class="border-2 border-blue-500 rounded-lg p-3 text-gray-800 placeholder-gray-400 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"

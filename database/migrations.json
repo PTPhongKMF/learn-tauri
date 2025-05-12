@@ -1,0 +1,14 @@
+{
+  "migrations": [
+    {
+      "version": 0,
+      "description": "migration v0",
+      "sql": "CREATE TABLE Person (\r\n\tid INTEGER PRIMARY KEY,\r\n\tname TEXT\r\n);\r\n"
+    },
+    {
+      "version": 1,
+      "description": "migration v1",
+      "sql": "CREATE TABLE Job (\r\n\tid INTEGER PRIMARY KEY,\r\n\tname TEXT\r\n);\r\n"
+    }
+  ]
+}

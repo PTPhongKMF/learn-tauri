@@ -22,7 +22,9 @@ const Initialization = (props) => {
     async function setup() {
       unlisten = await getCurrentWebviewWindow().onCloseRequested(async (e) => {
         console.log("closing");
-        await db().close();
+        if (db())
+          await db().close();
+
         await getCurrentWebviewWindow().destroy();
       });
     };

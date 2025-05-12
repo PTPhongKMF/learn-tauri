@@ -1,0 +1,4 @@
+CREATE TABLE Job (
+	id INTEGER PRIMARY KEY,
+	name TEXT
+);

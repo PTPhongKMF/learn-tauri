@@ -6,7 +6,7 @@ use tempfile::TempDir;
 // Define structures for bundled migrations
 #[derive(Deserialize)]
 struct BundledMigration {
-    version: i64,
+    version: i64, // i64
     description: String,
     sql: String,
 }
@@ -16,15 +16,19 @@ struct MigrationBundle {
     migrations: Vec<BundledMigration>,
 }
 
-/// Applies migrations from a bundled CBOR file
+/// Applies migrations from a CBOR file at the specified path
 #[tauri::command]
 pub async fn apply_migrations(
-    _app_handle: AppHandle,   // Prefix with _ to silence unused variables warning (if use in the future, remove prefix)
+    _app_handle: AppHandle,  // Prefix with _ to silence unused variables warning (if use in the future, remove prefix)
     db_path: String, 
-    migration_bundle: Vec<u8> // Binary CBOR data
+    cbor_file_path: String  // Path to the CBOR file
 ) -> Result<i64, String> {
+    // Read the CBOR file
+    let cbor_data = fs::read(&cbor_file_path)
+        .map_err(|e| format!("Failed to read CBOR file: {}", e))?;
+    
     // Parse the migration bundle
-    let bundle: MigrationBundle = ciborium::de::from_reader(&migration_bundle[..])
+    let bundle: MigrationBundle = ciborium::de::from_reader(&cbor_data[..])
         .map_err(|e| format!("Failed to parse CBOR migration bundle: {}", e))?;
     
     // Create a temporary directory for migration files
@@ -34,7 +38,7 @@ pub async fn apply_migrations(
     // Write each migration to a file in the temporary directory
     for migration in bundle.migrations {
         // Format filename according to SQLx conventions: {version}_{description}.sql
-        let filename = format!("{:012}_{}.sql", migration.version, migration.description);
+        let filename = format!("{}_{}.sql", migration.version, migration.description);
         let file_path = temp_dir.path().join(filename);
         
         fs::write(&file_path, migration.sql)
